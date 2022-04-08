@@ -15,14 +15,12 @@ import io
 import base64
 import urllib
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 facec = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')   #load face detection cascade file
 
 app = Flask(__name__)
 app.secret_key = 'some secret key'
-
-
-
 
 
 @app.route('/', methods=['GET'])
