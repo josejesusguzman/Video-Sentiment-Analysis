@@ -9,14 +9,17 @@ facec = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 from matplotlib import pyplot as plt
 import os
 import shutil
-from skimage.measure import compare_ssim
+from skimage.metrics import structural_similarity as compare_ssim
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 
 with open("model.json", "r") as json_file:   #Loading the saved model
     loaded_model_json = json_file.read()
     loaded_model = model_from_json(loaded_model_json)
 
 loaded_model.load_weights("model_weights.h5")
-loaded_model._make_predict_function()
+loaded_model.make_predict_function()
 label_to_text = {0:'angry', 1:'disgust', 2:'fear', 3:'happy', 4: 'sad'}
 
 def pred(img_path):  
@@ -93,8 +96,3 @@ def ssimscore1(im1,im2):
     (score, diff) = compare_ssim(im1, im2, full=True,multichannel=True) #comparing the image for finding difference using compare_ssim function 
     return score
     
-
-
-
-
-
